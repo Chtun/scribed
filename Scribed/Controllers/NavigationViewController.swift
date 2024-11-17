@@ -25,7 +25,7 @@ class NavigationViewController: UINavigationController {
     
     func setupViews() {
                         
-        navigationItem.title = "Jottre"
+        navigationItem.title = "Scribed"
         navigationBar.prefersLargeTitles = true
         
     }
