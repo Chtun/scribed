@@ -63,21 +63,49 @@ extension DrawViewController {
 }
 
 
-extension DrawViewController: PKCanvasViewDelegate {
+extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegate {
     
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        
+        // Update content size and navigation items
         updateContentSizeForDrawing()
         reloadNavigationItems()
-        
+
         if modifiedCount == 1 {
             hasModifiedDrawing = true
         } else {
             modifiedCount += 1
         }
-    
+        
+        // Only capture the last stroke while drawing
+        guard let lastStroke = canvasView.drawing.strokes.last else { return }
+        currentStroke = lastStroke
+        
+        print("Stroke updated.")
+        
+        guard let startTime = currentStrokeStartTime else { return }
+
+        let relativeStartTime = startTime.timeIntervalSince(self.startTime ?? Date())
+        let relativeEndTime = Date().timeIntervalSince(self.startTime ?? Date())
+
+        // Add stroke and timestamp to TimedDrawing
+        timedDrawing.addStrokeWithTimestamp(
+            lastStroke,
+            startTime: (self.startTime ?? Date()).addingTimeInterval(relativeStartTime),
+            endTime: (self.startTime ?? Date()).addingTimeInterval(relativeEndTime)
+        )
+
+        // Log the stroke
+        logTimedStrokes()
+
+        // Reset stroke-related variables
+        currentStrokeStartTime = nil
+        currentStroke = nil
     }
     
+    func penOrMouseDidGoDown() {
+        print("Mouse or pen down detected in DrawViewController at \(Date())")
+        currentStrokeStartTime = Date()
+    }
 }
 
 

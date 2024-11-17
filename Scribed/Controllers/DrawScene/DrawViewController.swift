@@ -13,6 +13,12 @@ class DrawViewController: UIViewController {
     
     // MARK: - Properties
     
+    internal var startTime: Date?
+    internal var currentStrokeStartTime: Date?
+    internal var currentStroke: PKStroke?
+    internal var lastStrokeCount: Int = 0
+    internal var timedDrawing = TimedDrawing()
+    
     var node: Node!
     
     var isUndoEnabled: Bool = false
@@ -37,12 +43,10 @@ class DrawViewController: UIViewController {
         return LoadingView()
     }()
     
-    var canvasView: PKCanvasView = {
-        let canvasView = PKCanvasView()
-            canvasView.translatesAutoresizingMaskIntoConstraints = false
-            canvasView.drawingPolicy = .default
-            canvasView.alwaysBounceVertical = true
-            canvasView.maximumZoomScale = 3
+    var canvasView: TrackablePKCanvasView = {
+        let canvasView = TrackablePKCanvasView()
+        canvasView.translatesAutoresizingMaskIntoConstraints = false
+        canvasView.drawingPolicy = .anyInput // Allow any input (finger, mouse, Pencil)
         return canvasView
     }()
     
@@ -54,7 +58,16 @@ class DrawViewController: UIViewController {
     
     var undoButton: UIBarButtonItem!
     
-    
+    private let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
     
     // MARK: - Init
     
@@ -76,9 +89,7 @@ class DrawViewController: UIViewController {
         
         setupViews()
         setupDelegates()
-        
     }
-    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -97,6 +108,9 @@ class DrawViewController: UIViewController {
         super.viewDidAppear(animated)
         
         node.isOpened = true
+        
+        startTime = Date() // Start the timer
+
         
         guard let parent = parent, let window = parent.view.window, let windowScene = window.windowScene else { return }
         
@@ -149,30 +163,64 @@ class DrawViewController: UIViewController {
         
         reloadNavigationItems()
         
+        // Add canvas view
         view.addSubview(canvasView)
-        canvasView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        canvasView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        canvasView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            canvasView.topAnchor.constraint(equalTo: view.topAnchor),
+            canvasView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            canvasView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            canvasView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
         
+        // Add loading view
         view.addSubview(loadingView)
-        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        loadingView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        loadingView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        NSLayoutConstraint.activate([
+            loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loadingView.widthAnchor.constraint(equalToConstant: 120),
+            loadingView.heightAnchor.constraint(equalToConstant: 120)
+        ])
+        
+        // Add button stack view
+        let buttonStackView = UIStackView()
+        buttonStackView.axis = .vertical
+        buttonStackView.alignment = .fill
+        buttonStackView.distribution = .equalSpacing
+        buttonStackView.spacing = 8
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let drawingButton = UIButton(type: .system)
+        drawingButton.setTitle("Drawing", for: .normal)
+        drawingButton.addTarget(self, action: #selector(setDrawingMode), for: .touchUpInside)
+        
+        let viewingButton = UIButton(type: .system)
+        viewingButton.setTitle("Viewing", for: .normal)
+        viewingButton.addTarget(self, action: #selector(setViewingMode), for: .touchUpInside)
+        
+        buttonStackView.addArrangedSubview(drawingButton)
+        buttonStackView.addArrangedSubview(viewingButton)
+        
+        view.addSubview(buttonStackView)
+        
+        // Position the stack view below the navigation bar
+        NSLayoutConstraint.activate([
+            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        ])
         
         updateContentSizeForDrawing()
-        
     }
+
     
     
     private func setupDelegates() {
-        
         guard let nodeCodable = node.codable else { return }
         
-        canvasView.delegate = self
-        canvasView.drawing = nodeCodable.drawing
-        
+        canvasView.trackableDelegate = self
+        canvasView.delegate = self // PKCanvasViewDelegate
+        timedDrawing = TimedDrawing(drawing: nodeCodable.drawing) // Initialize with existing drawing
+        canvasView.drawing = timedDrawing.drawing // Assign wrapped drawing to canvasView
+
         if !UIDevice.isLimited() {
             toolPicker.setVisible(true, forFirstResponder: canvasView)
             toolPicker.addObserver(canvasView)
@@ -180,7 +228,25 @@ class DrawViewController: UIViewController {
             updateLayout(for: toolPicker)
             canvasView.becomeFirstResponder()
         }
-        
+    }
+
+    private func setupModeButtons() {
+        // Add mode toggle buttons
+        let drawingButton = UIBarButtonItem(title: "Drawing", style: .plain, target: self, action: #selector(setDrawingMode))
+        let viewingButton = UIBarButtonItem(title: "Viewing", style: .plain, target: self, action: #selector(setViewingMode))
+        navigationItem.rightBarButtonItems = [drawingButton, viewingButton]
+    }
+    
+    @objc func setDrawingMode() {
+        canvasView.isUserInteractionEnabled = true
+        canvasView.allowsFingerDrawing = true // Enable finger drawing if applicable
+        canvasView.drawingPolicy = .anyInput // Enable drawing with Pencil and finger
+        print("Switched to drawing mode")
+    }
+
+    @objc func setViewingMode() {
+        canvasView.isUserInteractionEnabled = false // Disable all interaction
+        print("Switched to viewing mode")
     }
  
     
@@ -265,8 +331,17 @@ class DrawViewController: UIViewController {
     func writeDrawing() {
         DispatchQueue.main.async {
             self.hasModifiedDrawing = false
-            self.node.setDrawing(drawing: self.canvasView.drawing)
+            self.node.setDrawing(drawing: self.timedDrawing.drawing) // Save the wrapped drawing
         }
     }
     
+    func logTimedStrokes() {
+        print("Logging timed strokes!")
+        let timedStrokes = timedDrawing.getTimedStrokes()
+        for (index, timedStroke) in timedStrokes.enumerated() {
+            print("Stroke \(index + 1):")
+            print("    Start Time: \(timedStroke.startTime)")
+            print("    End Time: \(timedStroke.endTime)")
+        }
+    }
 }

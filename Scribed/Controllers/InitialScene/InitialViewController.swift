@@ -1,8 +1,8 @@
 //
 //  InitialViewController.swift
-//  Jottre
+//  Scribed
 //
-//  Created by Anton Lorani on 16.01.21.
+//  Created by Chitsein Htun
 //
 
 import UIKit
@@ -39,8 +39,7 @@ class InitialViewController: UIViewController {
             textView.isSelectable = false
             textView.font = UIFont.systemFont(ofSize: 25, weight: .regular)
             textView.textColor = UIColor.secondaryLabel
-            textView.text = UIDevice.isLimited() ? NSLocalizedString("Documents created with the 'Jottre for iPad' App can be viewed here.", comment: "") : NSLocalizedString("No documents available yet. Click 'Add note' to create a new file.", comment: "")
-            textView.text = Downloader.isCloudEnabled ? textView.text : UIDevice.isLimited() ? NSLocalizedString("Enable iCloud to view files created with 'Jottre for iPad'", comment: "") : NSLocalizedString("Enable iCloud to unlock the full potential of Jottre", comment: "")
+            textView.text = UIDevice.isLimited() ? NSLocalizedString("Documents created with the 'Scribed for iPad' App can be viewed here.", comment: "") : NSLocalizedString("No documents available yet. Click 'Add note' to create a new file.", comment: "")
             textView.textAlignment = .center
             textView.isScrollEnabled = false
             textView.backgroundColor = .clear
@@ -95,16 +94,12 @@ class InitialViewController: UIViewController {
     
     private func setupViews() {
         
-        navigationItem.title = "Jottre"
+        navigationItem.title = "Scribed"
         
         view.backgroundColor = .systemBackground
         
         if !UIDevice.isLimited() {
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: NavigationTextButton(title: NSLocalizedString("Add note", comment: ""), target: self, action: #selector(createNode)))
-        }
-        
-        if !Downloader.isCloudEnabled {
-            presentInfoAlert()
         }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: SettingsButton(target: self, action: #selector(presentSettings)))

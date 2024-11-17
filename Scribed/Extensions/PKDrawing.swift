@@ -9,6 +9,39 @@ import PencilKit
 
 extension PKDrawing {
     
+    // A struct to hold stroke data with timestamps
+    struct TimedStroke {
+        let stroke: PKStroke
+        let startTime: Date
+        let endTime: Date
+    }
+    
+    // An array to hold timed strokes
+    private struct AssociatedKeys {
+        static var timedStrokesKey = "timedStrokesKey"
+    }
+    
+    private var timedStrokes: [TimedStroke] {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.timedStrokesKey) as? [TimedStroke] ?? []
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.timedStrokesKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
+    // Method to add a stroke with timestamps
+    mutating func addStrokeWithTimestamp(_ stroke: PKStroke, startTime: Date, endTime: Date) {
+        let timedStroke = TimedStroke(stroke: stroke, startTime: startTime, endTime: endTime)
+        timedStrokes.append(timedStroke)
+        self.strokes.append(stroke)
+    }
+    
+    // Method to retrieve all timed strokes
+    func getTimedStrokes() -> [TimedStroke] {
+        return timedStrokes
+    }
+    
     /// Converts PKDrawing to a UIImage using a presetted appearance
     /// NOTE: - The returned image has 3 channels (4th channel (alpha) will be just white color)
     /// - Parameters:

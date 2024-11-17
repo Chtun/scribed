@@ -10,6 +10,8 @@
 		5FEFB7612CE9813F0045AA78 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7602CE9813F0045AA78 /* UIDevice.swift */; };
 		5FEFB7632CE9818D0045AA78 /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7622CE9818D0045AA78 /* ThumbnailGenerator.swift */; };
 		5FEFB7652CE981A80045AA78 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7642CE981A80045AA78 /* Downloader.swift */; };
+		5FEFB7672CE998A40045AA78 /* TimedDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7662CE998A40045AA78 /* TimedDrawing.swift */; };
+		5FEFB7692CE9A2C70045AA78 /* TrackablePKCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */; };
 		A61A616125EEB2B40030684C /* RedoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616025EEB2B40030684C /* RedoButton.swift */; };
 		A61A616425EEB34E0030684C /* UndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616325EEB34E0030684C /* UndoButton.swift */; };
 		A61A616725EEB44E0030684C /* SpaceButtonBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */; };
@@ -57,6 +59,9 @@
 		5FEFB7602CE9813F0045AA78 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDevice.swift; path = Scribed/UIDevice.swift; sourceTree = SOURCE_ROOT; };
 		5FEFB7622CE9818D0045AA78 /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThumbnailGenerator.swift; path = Scribed/ThumbnailGenerator.swift; sourceTree = SOURCE_ROOT; };
 		5FEFB7642CE981A80045AA78 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Downloader.swift; path = Scribed/Downloader.swift; sourceTree = SOURCE_ROOT; };
+		5FEFB7662CE998A40045AA78 /* TimedDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedDrawing.swift; sourceTree = "<group>"; };
+		5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackablePKCanvasView.swift; sourceTree = "<group>"; };
+		5FEFB76A2CE9A7D50045AA78 /* Scribed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scribed-Bridging-Header.h"; sourceTree = "<group>"; };
 		A61A616025EEB2B40030684C /* RedoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedoButton.swift; sourceTree = "<group>"; };
 		A61A616325EEB34E0030684C /* UndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButton.swift; sourceTree = "<group>"; };
 		A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceButtonBarItem.swift; sourceTree = "<group>"; };
@@ -238,6 +243,9 @@
 				A6C0D70225B9DB9D00336230 /* URL.swift */,
 				A6C0D70625B9F21400336230 /* PKDrawing.swift */,
 				A6F60F8425CAA2CC002CAAE4 /* Data.swift */,
+				5FEFB7662CE998A40045AA78 /* TimedDrawing.swift */,
+				5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */,
+				5FEFB76A2CE9A7D50045AA78 /* Scribed-Bridging-Header.h */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -312,6 +320,7 @@
 				TargetAttributes = {
 					A6E3B7E725B3260200C65157 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1540;
 					};
 				};
 			};
@@ -367,6 +376,7 @@
 				A6350E5425C9CEFB0059E96E /* NodeExtensions.swift in Sources */,
 				A6C0D70725B9F21400336230 /* PKDrawing.swift in Sources */,
 				A6E3B84B25B347C100C65157 /* DrawViewController.swift in Sources */,
+				5FEFB7692CE9A2C70045AA78 /* TrackablePKCanvasView.swift in Sources */,
 				A6C0D70325B9DB9D00336230 /* URL.swift in Sources */,
 				A650EE6B25C585D300830112 /* NodeDecoderExtension.swift in Sources */,
 				A6BB131325B46E2D008C5D8A /* SettingsCell.swift in Sources */,
@@ -390,6 +400,7 @@
 				A6E3B82825B32AD300C65157 /* NavigationTextButton.swift in Sources */,
 				A61BB9FA25D0604200E63CF6 /* ShareButton.swift in Sources */,
 				A650EE6825C5819500830112 /* NodeCodable.swift in Sources */,
+				5FEFB7672CE998A40045AA78 /* TimedDrawing.swift in Sources */,
 				A6E3B86825B374A200C65157 /* MenuActions.swift in Sources */,
 				A6C0D70B25B9F42400336230 /* LoadingView.swift in Sources */,
 				A6E3B82125B32AB400C65157 /* Logger.swift in Sources */,
@@ -543,6 +554,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Scribed/Scribed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
@@ -558,6 +570,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Scribed/Extensions/Scribed-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -568,6 +582,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Scribed/Scribed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
@@ -583,6 +598,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Scribed/Extensions/Scribed-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
