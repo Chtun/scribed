@@ -289,9 +289,10 @@ class Node: NSObject {
     
     /// Moves drawing to Node. Calls update to generate thumbnail
     /// - Parameter drawing: Given PKDrawing
-    func setDrawing(drawing: PKDrawing) {
+    func setDrawing(drawing: PKDrawing, timedStrokes: [TimedStroke]) {
         
         codable?.drawing = drawing
+        codable?.timedStrokes = timedStrokes
         codable?.lastModified = NSDate().timeIntervalSince1970
         
         didUpdate()

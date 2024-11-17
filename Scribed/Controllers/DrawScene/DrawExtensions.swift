@@ -69,7 +69,7 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
         // Update content size and navigation items
         updateContentSizeForDrawing()
         reloadNavigationItems()
-
+        
         if modifiedCount == 1 {
             hasModifiedDrawing = true
         } else {
@@ -77,29 +77,28 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
         }
         
         // Only capture the last stroke while drawing
-        guard let lastStroke = canvasView.drawing.strokes.last else { return }
-        currentStroke = lastStroke
-        
+        let lastStrokeIndex = canvasView.drawing.strokes.count - 1
+        guard lastStrokeIndex >= 0 else { return } // Ensure there is at least one stroke
+
         print("Stroke updated.")
         
         guard let startTime = currentStrokeStartTime else { return }
-
+        
         let relativeStartTime = startTime.timeIntervalSince(self.startTime ?? Date())
         let relativeEndTime = Date().timeIntervalSince(self.startTime ?? Date())
-
+        
         // Add stroke and timestamp to TimedDrawing
         timedDrawing.addStrokeWithTimestamp(
-            lastStroke,
+            lastStrokeIndex,
             startTime: (self.startTime ?? Date()).addingTimeInterval(relativeStartTime),
             endTime: (self.startTime ?? Date()).addingTimeInterval(relativeEndTime)
         )
-
+        
         // Log the stroke
         logTimedStrokes()
-
+        
         // Reset stroke-related variables
         currentStrokeStartTime = nil
-        currentStroke = nil
     }
     
     func penOrMouseDidGoDown() {

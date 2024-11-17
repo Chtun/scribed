@@ -15,8 +15,8 @@ class DrawViewController: UIViewController {
     
     internal var startTime: Date?
     internal var currentStrokeStartTime: Date?
-    internal var currentStroke: PKStroke?
-    internal var lastStrokeCount: Int = 0
+    
+    internal var viewedStrokeIndex: Int?
     internal var timedDrawing = TimedDrawing()
     
     var node: Node!
@@ -147,7 +147,9 @@ class DrawViewController: UIViewController {
         userActivity!.addUserInfoEntries(from: [ Node.NodeOpenDetailIdKey: node.url! ])
     }
     
-    
+    private var drawingButton: UIButton?
+    private var viewingButton: UIButton?
+
     
     // MARK: - Methods
     
@@ -180,7 +182,7 @@ class DrawViewController: UIViewController {
             loadingView.widthAnchor.constraint(equalToConstant: 120),
             loadingView.heightAnchor.constraint(equalToConstant: 120)
         ])
-        
+        /*
         // Add button stack view
         let buttonStackView = UIStackView()
         buttonStackView.axis = .vertical
@@ -207,8 +209,65 @@ class DrawViewController: UIViewController {
             buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
         ])
+        */
         
+        // Add button stack view
+        let buttonStackView = UIStackView()
+        buttonStackView.axis = .vertical
+        buttonStackView.alignment = .fill
+        buttonStackView.distribution = .equalSpacing
+        buttonStackView.spacing = 8 // Adjust spacing between buttons
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Create the "Drawing" button with an image
+        let drawingButton = UIButton(type: .system)
+        let drawingImage = UIImage(systemName: "pencil.circle") // Use SF Symbols
+        drawingButton.setImage(drawingImage?.withRenderingMode(.alwaysTemplate), for: .normal)
+        drawingButton.tintColor = .systemBlue // Default color
+
+        // Adjust logo size
+        drawingButton.imageView?.contentMode = .scaleAspectFit
+        drawingButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5) // Add padding
+        drawingButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        drawingButton.imageView?.heightAnchor.constraint(equalToConstant: 40).isActive = true // Set height
+        drawingButton.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true // Set width
+
+        drawingButton.addTarget(self, action: #selector(setDrawingMode), for: .touchUpInside)
+
+        // Create the "Viewing" button with an image
+        let viewingButton = UIButton(type: .system)
+        let viewingImage = UIImage(systemName: "eye.circle") // Use SF Symbols
+        viewingButton.setImage(viewingImage?.withRenderingMode(.alwaysTemplate), for: .normal)
+        viewingButton.tintColor = .systemBlue // Default color
+
+        // Adjust logo size
+        viewingButton.imageView?.contentMode = .scaleAspectFit
+        viewingButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5) // Add padding
+        viewingButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        viewingButton.imageView?.heightAnchor.constraint(equalToConstant: 40).isActive = true // Set height
+        viewingButton.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true // Set width
+
+        viewingButton.addTarget(self, action: #selector(setViewingMode), for: .touchUpInside)
+
+        // Add the buttons to the stack view
+        buttonStackView.addArrangedSubview(drawingButton)
+        buttonStackView.addArrangedSubview(viewingButton)
+
+        // Add the stack view to the main view
+        view.addSubview(buttonStackView)
+
+        // Position the stack view below the navigation bar
+        NSLayoutConstraint.activate([
+            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
+        ])
+
+        // Store buttons as properties for state management
+        self.drawingButton = drawingButton
+        self.viewingButton = viewingButton
+
         updateContentSizeForDrawing()
+        setDrawingMode()
     }
 
     
@@ -218,8 +277,8 @@ class DrawViewController: UIViewController {
         
         canvasView.trackableDelegate = self
         canvasView.delegate = self // PKCanvasViewDelegate
-        timedDrawing = TimedDrawing(drawing: nodeCodable.drawing) // Initialize with existing drawing
-        canvasView.drawing = timedDrawing.drawing // Assign wrapped drawing to canvasView
+        timedDrawing = TimedDrawing(timedS: nodeCodable.timedStrokes) // Initialize with existing drawing
+        canvasView.drawing = nodeCodable.drawing // Assign wrapped drawing to canvasView
 
         if !UIDevice.isLimited() {
             toolPicker.setVisible(true, forFirstResponder: canvasView)
@@ -229,26 +288,48 @@ class DrawViewController: UIViewController {
             canvasView.becomeFirstResponder()
         }
     }
-
-    private func setupModeButtons() {
-        // Add mode toggle buttons
-        let drawingButton = UIBarButtonItem(title: "Drawing", style: .plain, target: self, action: #selector(setDrawingMode))
-        let viewingButton = UIBarButtonItem(title: "Viewing", style: .plain, target: self, action: #selector(setViewingMode))
-        navigationItem.rightBarButtonItems = [drawingButton, viewingButton]
-    }
     
+
     @objc func setDrawingMode() {
+        // Highlight "Drawing" button by changing the icon to green
+        drawingButton?.tintColor = .green
+        drawingButton?.setImage(
+            UIImage(systemName: "pencil.circle")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+
+        // Reset "Viewing" button to default
+        viewingButton?.tintColor = .systemBlue
+        viewingButton?.setImage(
+            UIImage(systemName: "eye.circle")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+
         canvasView.isUserInteractionEnabled = true
-        canvasView.allowsFingerDrawing = true // Enable finger drawing if applicable
-        canvasView.drawingPolicy = .anyInput // Enable drawing with Pencil and finger
+        canvasView.drawingPolicy = .anyInput // Enable drawing
         print("Switched to drawing mode")
     }
 
     @objc func setViewingMode() {
-        canvasView.isUserInteractionEnabled = false // Disable all interaction
+        // Highlight "Viewing" button by changing the icon to green
+        viewingButton?.tintColor = .green
+        viewingButton?.setImage(
+            UIImage(systemName: "eye.circle")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+
+        // Reset "Drawing" button to default
+        drawingButton?.tintColor = .systemBlue
+        drawingButton?.setImage(
+            UIImage(systemName: "pencil.circle")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+
+        canvasView.isUserInteractionEnabled = false
         print("Switched to viewing mode")
     }
- 
+
+
     
     func updateContentSizeForDrawing() {
         
@@ -331,7 +412,7 @@ class DrawViewController: UIViewController {
     func writeDrawing() {
         DispatchQueue.main.async {
             self.hasModifiedDrawing = false
-            self.node.setDrawing(drawing: self.timedDrawing.drawing) // Save the wrapped drawing
+            self.node.setDrawing(drawing: self.canvasView.drawing, timedStrokes: self.timedDrawing.getTimedStrokes()) // Save the wrapped drawing and timed strokes.
         }
     }
     

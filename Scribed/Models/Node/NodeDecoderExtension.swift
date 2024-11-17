@@ -25,7 +25,7 @@ extension Node {
             
             do {
                 let codableV1 = try decoder.decode(NodeCodableV1.self, from: data)
-                return NodeCodableV2(drawing: codableV1.drawing, width: codableV1.width, version: 1, lastModified: NSDate().timeIntervalSince1970)
+                return NodeCodableV2(drawing: codableV1.drawing, timedStrokes: codableV1.timedStrokes, width: codableV1.width, version: 1, lastModified: NSDate().timeIntervalSince1970)
             } catch {
                 Logger.main.error("Could not decode data as NodeCodable(V1, V2)")
                 return nil

@@ -14,6 +14,8 @@ struct NodeCodableV1: Codable {
     
     var drawing: PKDrawing = PKDrawing()
     
+    var timedStrokes: [TimedStroke] = []
+    
     var width: CGFloat = 1200
     
 }
@@ -23,6 +25,8 @@ struct NodeCodableV1: Codable {
 struct NodeCodableV2: Codable {
     
     var drawing: PKDrawing = PKDrawing()
+    
+    var timedStrokes: [TimedStroke] = []
     
     var width: CGFloat = 1200
     

@@ -141,7 +141,7 @@ extension Node {
         let updatedName = NodeCollector.computeCopyName(baseName: name, path: croppedURL)
         
         let node = Node(url: croppedURL.appendingPathComponent(updatedName).appendingPathExtension("jot"))
-        node.setDrawing(drawing: self.codable!.drawing)
+        node.setDrawing(drawing: self.codable!.drawing, timedStrokes: self.codable!.timedStrokes)
         node.pull { (success) in
             if success {
                 collector.nodes.append(node)
