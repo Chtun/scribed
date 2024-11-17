@@ -34,4 +34,8 @@ struct NodeCodableV2: Codable {
     
     var lastModified: Double = NSDate().timeIntervalSince1970
     
+    var hasAudio: Bool = false
+    var audioFileName: String? = nil
+    var audioDuration: TimeInterval = 0.0
+    
 }

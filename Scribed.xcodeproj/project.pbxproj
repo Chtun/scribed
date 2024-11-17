@@ -12,6 +12,7 @@
 		5FEFB7652CE981A80045AA78 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7642CE981A80045AA78 /* Downloader.swift */; };
 		5FEFB7672CE998A40045AA78 /* TimedDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7662CE998A40045AA78 /* TimedDrawing.swift */; };
 		5FEFB7692CE9A2C70045AA78 /* TrackablePKCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */; };
+		9A5EAFF92CE9DE1200CF15C8 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFF82CE9DE1200CF15C8 /* AudioPlayerView.swift */; };
 		A61A616125EEB2B40030684C /* RedoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616025EEB2B40030684C /* RedoButton.swift */; };
 		A61A616425EEB34E0030684C /* UndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616325EEB34E0030684C /* UndoButton.swift */; };
 		A61A616725EEB44E0030684C /* SpaceButtonBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */; };
@@ -62,6 +63,7 @@
 		5FEFB7662CE998A40045AA78 /* TimedDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimedDrawing.swift; sourceTree = "<group>"; };
 		5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackablePKCanvasView.swift; sourceTree = "<group>"; };
 		5FEFB76A2CE9A7D50045AA78 /* Scribed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scribed-Bridging-Header.h"; sourceTree = "<group>"; };
+		9A5EAFF82CE9DE1200CF15C8 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		A61A616025EEB2B40030684C /* RedoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedoButton.swift; sourceTree = "<group>"; };
 		A61A616325EEB34E0030684C /* UndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButton.swift; sourceTree = "<group>"; };
 		A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceButtonBarItem.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				A6E3B83F25B3349900C65157 /* InitialScene */,
 				A6E3B84925B347AE00C65157 /* DrawScene */,
 				A6BB130525B45E52008C5D8A /* SettingsScene */,
+				9A5EAFF82CE9DE1200CF15C8 /* AudioPlayerView.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				A6BB134825B4A469008C5D8A /* SettingsButton.swift in Sources */,
 				A6E3B82C25B32AEB00C65157 /* NavigationViewController.swift in Sources */,
 				A6BB130725B45ECB008C5D8A /* SettingsViewController.swift in Sources */,
+				9A5EAFF92CE9DE1200CF15C8 /* AudioPlayerView.swift in Sources */,
 				A6E3B84E25B3495800C65157 /* DrawExtensions.swift in Sources */,
 				A6E3B83D25B3340300C65157 /* UIView.swift in Sources */,
 				A6350E5425C9CEFB0059E96E /* NodeExtensions.swift in Sources */,
