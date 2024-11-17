@@ -62,13 +62,30 @@ extension DrawViewController {
     
 }
 
+extension PKStrokePath {
+    func shortest_distance(_ point: CGPoint) -> Float {
+        var smallest_distance = Float(1000000)
+        for t in stride(from: 0.0, to: CGFloat(self.count), by: 0.01) { // Adjust stride for finer precision
+            let pathPoint = interpolatedPoint(at: CGFloat(t))
+            var distance = Float(abs(pathPoint.location.x - point.x) + abs(pathPoint.location.y - point.y))
+            if distance < smallest_distance {
+                smallest_distance = distance
+            }
+        }
+        return smallest_distance
+    }
+}
 
 extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegate {
     
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+        
+        guard !IsViewingMode else { return }
+        
         // Update content size and navigation items
         updateContentSizeForDrawing()
         reloadNavigationItems()
+        
         
         if modifiedCount == 1 {
             hasModifiedDrawing = true
@@ -90,8 +107,8 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
         // Add stroke and timestamp to TimedDrawing
         timedDrawing.addStrokeWithTimestamp(
             lastStrokeIndex,
-            startTime: (self.startTime ?? Date()).addingTimeInterval(relativeStartTime),
-            endTime: (self.startTime ?? Date()).addingTimeInterval(relativeEndTime)
+            startTime: relativeStartTime,
+            endTime: relativeEndTime
         )
         
         // Log the stroke
@@ -102,8 +119,122 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
     }
     
     func penOrMouseDidGoDown() {
-        print("Mouse or pen down detected in DrawViewController at \(Date())")
         currentStrokeStartTime = Date()
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+            guard IsViewingMode, let touch = touches.first else { return } // Only process touches in viewing mode
+            let locationInCanvas = touch.location(in: canvasView)
+            
+            // Transform the location to match the drawing's coordinate system
+            let adjustedLocation = CGPoint(
+                x: (locationInCanvas.x + canvasView.contentOffset.x) / canvasView.zoomScale,
+                y: (locationInCanvas.y + canvasView.contentOffset.y + canvasView.adjustedContentInset.top) / canvasView.zoomScale
+            )
+            
+            if let strokeIndex = getTappedStrokeIndex(from: canvasView.drawing, at: adjustedLocation) {
+                handleStrokeSelection(at: strokeIndex)
+            }
+    }
+
+    
+    func getTappedStrokeIndex(from drawing: PKDrawing, at location: CGPoint, tolerance: CGFloat = 20) -> Int? {
+        var shortest_distance = Float(tolerance) + 1
+        var shortest_index = -1
+        for (index, stroke) in drawing.strokes.enumerated() {
+            var distance = stroke.path.shortest_distance(location)
+            if distance < Float(tolerance) && distance < shortest_distance {
+                shortest_index = index
+                shortest_distance = distance
+            }
+        }
+        
+        if shortest_index == -1 {
+            return nil
+        }
+        else
+        {
+            return shortest_index
+        }
+    }
+    
+    func handleStrokeSelection(at index: Int) {
+        print("Selected Stroke at index: \(index)")
+        
+        handleStrokeDeselection(at: viewedStrokeIndex)
+        
+        if index == viewedStrokeIndex {
+            viewedStrokeIndex = nil
+            return
+        }
+                
+        
+        viewedStrokeIndex = index
+        highlightStroke(at: index)
+        
+        // Find the time stroke that corresponds to this stroke index.
+        let timedStrokes = self.timedDrawing.getTimedStrokes()
+        
+        for timedStroke in timedStrokes
+        {
+            if timedStroke.stroke_index == index
+            {
+                let secondsToSubtract: TimeInterval = 2
+                var playbackTime = timedStroke.startTime - secondsToSubtract
+                
+                if (playbackTime < 0)
+                {
+                    playbackTime = TimeInterval(0)
+                }
+                
+                // Once you find the time stroke, set the audio to the given second.
+                currentAudioPlayerView?.setAudioPlayback(time: playbackTime)
+            }
+        }
+    }
+    
+    func handleStrokeDeselection(at index: Int?)
+    {
+        if index != nil {
+            var ind = index ?? -1
+            dehighlightStroke(at: ind)
+        }
+    }
+
+    func highlightStroke(at index: Int) {
+        guard index < canvasView.drawing.strokes.count else { return }
+        
+        var drawing = canvasView.drawing
+        let stroke = drawing.strokes[index]
+        
+        // Create a highlighted stroke
+        let highlightedStroke = PKStroke(
+            ink: PKInk(.pen, color: .red), // Highlight in red
+            path: stroke.path
+        )
+        
+        // Replace the selected stroke with the highlighted one
+        drawing.strokes[index] = highlightedStroke
+        canvasView.drawing = drawing
+    }
+    
+    func dehighlightStroke(at index: Int) {
+        guard index < canvasView.drawing.strokes.count else { return }
+        
+        var drawing = canvasView.drawing
+        let stroke = drawing.strokes[index]
+        
+        // Create a highlighted stroke
+        let highlightedStroke = PKStroke(
+            ink: PKInk(.pen, color: .black), // Highlight in black
+            path: stroke.path
+        )
+        
+        // Replace the selected stroke with the highlighted one
+        drawing.strokes[index] = highlightedStroke
+        canvasView.drawing = drawing
     }
 }
 

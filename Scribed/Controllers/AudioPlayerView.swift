@@ -119,6 +119,23 @@ class AudioPlayerView: UIView {
         }
     }
     
+    public func setAudioPlayback(time: TimeInterval) {
+        guard let audioPlayer = audioPlayer else {
+            print("Audio player is not initialized.")
+            return
+        }
+        
+        if time >= 0 && time <= audioPlayer.duration {
+            print("Time Interval: \(time)")
+
+            audioPlayer.currentTime = time
+            updateProgress()
+            playAudio()
+        } else {
+            print("Invalid time. Must be between 0 and \(audioPlayer.duration).")
+        }
+    }
+    
     private func playAudio() {
         audioPlayer?.play()
         isPlaying = true

@@ -19,7 +19,7 @@ class DrawViewController: UIViewController {
         }
     
     // Add this property to track the current audio player view
-    private var currentAudioPlayerView: AudioPlayerView?
+    internal var currentAudioPlayerView: AudioPlayerView?
     
     private var audioRecorder: AVAudioRecorder?
     private var isRecording = false {
@@ -38,9 +38,11 @@ class DrawViewController: UIViewController {
     internal var viewedStrokeIndex: Int?
     internal var timedDrawing = TimedDrawing()
     
+    internal var IsViewingMode: Bool = false
+    
     var node: Node!
     
-    var isUndoEnabled: Bool = false
+    var isUndoEnabled: Bool = true
     
     var modifiedCount: Int = 0
         
@@ -151,6 +153,14 @@ class DrawViewController: UIViewController {
     
     
     override func viewWillDisappear(_ animated: Bool) {
+        
+        if (isRecording)
+        {
+            stopRecording()
+        }
+        
+        handleStrokeDeselection(at: viewedStrokeIndex)
+        self.writeDrawing()
         super.viewWillDisappear(animated)
         
         view.window?.windowScene?.screenshotService?.delegate = nil
@@ -429,6 +439,10 @@ class DrawViewController: UIViewController {
                 recordButton.tintColor = .systemGray
                 recordButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
             }
+            else
+            {
+                self.startRecording()
+            }
         }
     
     private func startRecording() {
@@ -446,6 +460,7 @@ class DrawViewController: UIViewController {
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.record()
             isRecording = true
+            startTime = Date()
         } catch {
             print("Failed to start recording: \(error)")
             showRecordingError()
@@ -471,8 +486,8 @@ class DrawViewController: UIViewController {
                 self.canvasView.setContentOffset(currentOffset, animated: false)
             }
         }
-        
     }
+
     
     private func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -525,6 +540,7 @@ class DrawViewController: UIViewController {
 
         canvasView.isUserInteractionEnabled = true
         canvasView.drawingPolicy = .anyInput // Enable drawing
+        IsViewingMode = false
         print("Switched to drawing mode")
     }
 
@@ -544,6 +560,13 @@ class DrawViewController: UIViewController {
         )
 
         canvasView.isUserInteractionEnabled = false
+        IsViewingMode = true
+        
+        if (isRecording)
+        {
+            stopRecording()
+        }
+        
         print("Switched to viewing mode")
     }
 
