@@ -1,18 +1,24 @@
 //
 //  UIDevice.swift
-//  Scribed
+//  Jottre
 //
-//  Created by Pooja Kalikiri on 11/16/24.
+//  Created by Anton Lorani on 16.01.21.
 //
 
-import SwiftUI
+import UIKit
 
-struct UIDevice: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+extension UIDevice {
+    
+    /// Checks if device can be to edit Jots
+    /// - Returns: A boolish value that indicates potential limitations (Such as device is not an iPad)
+    static func isLimited() -> Bool {
+        
+        #if targetEnvironment(macCatalyst)
+            return true
+        #else
+            return !(UIDevice.current.userInterfaceIdiom == .pad)
+        #endif
+        
     }
-}
-
-#Preview {
-    UIDevice()
+    
 }

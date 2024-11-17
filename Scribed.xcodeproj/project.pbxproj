@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FEFB7612CE9813F0045AA78 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7602CE9813F0045AA78 /* UIDevice.swift */; };
+		5FEFB7632CE9818D0045AA78 /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7622CE9818D0045AA78 /* ThumbnailGenerator.swift */; };
+		5FEFB7652CE981A80045AA78 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7642CE981A80045AA78 /* Downloader.swift */; };
 		A61A616125EEB2B40030684C /* RedoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616025EEB2B40030684C /* RedoButton.swift */; };
 		A61A616425EEB34E0030684C /* UndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616325EEB34E0030684C /* UndoButton.swift */; };
 		A61A616725EEB44E0030684C /* SpaceButtonBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */; };
@@ -17,7 +20,6 @@
 		A650EE6825C5819500830112 /* NodeCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A650EE6725C5819500830112 /* NodeCodable.swift */; };
 		A650EE6B25C585D300830112 /* NodeDecoderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A650EE6A25C585D300830112 /* NodeDecoderExtension.swift */; };
 		A65F231D25B5C1B000A0E870 /* IconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65F231C25B5C1B000A0E870 /* IconSettingsCell.swift */; };
-		A6A8803E25BAB41E0080DD9D /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A8803D25BAB41E0080DD9D /* Downloader.swift */; };
 		A6BB130725B45ECB008C5D8A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BB130625B45ECB008C5D8A /* SettingsViewController.swift */; };
 		A6BB130C25B46057008C5D8A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BB130B25B46057008C5D8A /* Settings.swift */; };
 		A6BB131025B46BA2008C5D8A /* SettingsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6BB130F25B46BA2008C5D8A /* SettingsNavigationViewController.swift */; };
@@ -46,14 +48,15 @@
 		A6E3B84125B334AF00C65157 /* InitialExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B84025B334AF00C65157 /* InitialExtensions.swift */; };
 		A6E3B84B25B347C100C65157 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B84A25B347C100C65157 /* DrawViewController.swift */; };
 		A6E3B84E25B3495800C65157 /* DrawExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B84D25B3495800C65157 /* DrawExtensions.swift */; };
-		A6E3B85225B34ACB00C65157 /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B85125B34ACB00C65157 /* ThumbnailGenerator.swift */; };
-		A6E3B85E25B3673C00C65157 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B85D25B3673C00C65157 /* UIDevice.swift */; };
 		A6E3B86525B372A800C65157 /* ExportActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B86425B372A800C65157 /* ExportActions.swift */; };
 		A6E3B86825B374A200C65157 /* MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E3B86725B374A200C65157 /* MenuActions.swift */; };
 		A6F60F8525CAA2CC002CAAE4 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F60F8425CAA2CC002CAAE4 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5FEFB7602CE9813F0045AA78 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDevice.swift; path = Scribed/UIDevice.swift; sourceTree = SOURCE_ROOT; };
+		5FEFB7622CE9818D0045AA78 /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThumbnailGenerator.swift; path = Scribed/ThumbnailGenerator.swift; sourceTree = SOURCE_ROOT; };
+		5FEFB7642CE981A80045AA78 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Downloader.swift; path = Scribed/Downloader.swift; sourceTree = SOURCE_ROOT; };
 		A61A616025EEB2B40030684C /* RedoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedoButton.swift; sourceTree = "<group>"; };
 		A61A616325EEB34E0030684C /* UndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButton.swift; sourceTree = "<group>"; };
 		A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceButtonBarItem.swift; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 		A650EE6725C5819500830112 /* NodeCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCodable.swift; sourceTree = "<group>"; };
 		A650EE6A25C585D300830112 /* NodeDecoderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDecoderExtension.swift; sourceTree = "<group>"; };
 		A65F231C25B5C1B000A0E870 /* IconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSettingsCell.swift; sourceTree = "<group>"; };
-		A6A8803D25BAB41E0080DD9D /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		A6BB130625B45ECB008C5D8A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A6BB130B25B46057008C5D8A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A6BB130F25B46BA2008C5D8A /* SettingsNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigationViewController.swift; sourceTree = "<group>"; };
@@ -79,13 +81,13 @@
 		A6C0D70225B9DB9D00336230 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		A6C0D70625B9F21400336230 /* PKDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKDrawing.swift; sourceTree = "<group>"; };
 		A6C0D70A25B9F42400336230 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		A6E3B7E825B3260200C65157 /* Jottre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jottre.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6E3B7E825B3260200C65157 /* Scribed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scribed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E3B7EB25B3260200C65157 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6E3B7ED25B3260200C65157 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A6E3B7F425B3260300C65157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6E3B7F725B3260300C65157 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A6E3B7F925B3260300C65157 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A6E3B80025B3261800C65157 /* Jottre.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Jottre.entitlements; sourceTree = "<group>"; };
+		A6E3B80025B3261800C65157 /* Scribed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Scribed.entitlements; sourceTree = "<group>"; };
 		A6E3B82025B32AB400C65157 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A6E3B82325B32ABE00C65157 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		A6E3B82725B32AD300C65157 /* NavigationTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTextButton.swift; sourceTree = "<group>"; };
@@ -98,8 +100,6 @@
 		A6E3B84025B334AF00C65157 /* InitialExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialExtensions.swift; sourceTree = "<group>"; };
 		A6E3B84A25B347C100C65157 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		A6E3B84D25B3495800C65157 /* DrawExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawExtensions.swift; sourceTree = "<group>"; };
-		A6E3B85125B34ACB00C65157 /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
-		A6E3B85D25B3673C00C65157 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDevice.swift; path = Jottre/Helpers/UIDevice.swift; sourceTree = SOURCE_ROOT; };
 		A6E3B86425B372A800C65157 /* ExportActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportActions.swift; sourceTree = "<group>"; };
 		A6E3B86725B374A200C65157 /* MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuActions.swift; sourceTree = "<group>"; };
 		A6F60F8425CAA2CC002CAAE4 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		A6E3B7DF25B3260200C65157 = {
 			isa = PBXGroup;
 			children = (
-				A6E3B7EA25B3260200C65157 /* Jottre */,
+				A6E3B7EA25B3260200C65157 /* Scribed */,
 				A6E3B7E925B3260200C65157 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -183,12 +183,12 @@
 		A6E3B7E925B3260200C65157 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A6E3B7E825B3260200C65157 /* Jottre.app */,
+				A6E3B7E825B3260200C65157 /* Scribed.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A6E3B7EA25B3260200C65157 /* Jottre */ = {
+		A6E3B7EA25B3260200C65157 /* Scribed */ = {
 			isa = PBXGroup;
 			children = (
 				A6E3B85025B34ABA00C65157 /* Helpers */,
@@ -196,7 +196,7 @@
 				A6E3B81325B3297200C65157 /* Extensions */,
 				A6E3B80F25B3295200C65157 /* Views */,
 				A6E3B80725B3287C00C65157 /* Controllers */,
-				A6E3B80025B3261800C65157 /* Jottre.entitlements */,
+				A6E3B80025B3261800C65157 /* Scribed.entitlements */,
 				A6E3B7EB25B3260200C65157 /* AppDelegate.swift */,
 				A6E3B7ED25B3260200C65157 /* SceneDelegate.swift */,
 				A6E3B7F425B3260300C65157 /* Assets.xcassets */,
@@ -204,7 +204,7 @@
 				A6E3B7F925B3260300C65157 /* Info.plist */,
 				A6BB134325B49FDF008C5D8A /* Localizable.strings */,
 			);
-			path = Jottre;
+			path = Scribed;
 			sourceTree = "<group>";
 		};
 		A6E3B80725B3287C00C65157 /* Controllers */ = {
@@ -235,7 +235,6 @@
 				A6E3B82025B32AB400C65157 /* Logger.swift */,
 				A6E3B82325B32ABE00C65157 /* String.swift */,
 				A6E3B83C25B3340300C65157 /* UIView.swift */,
-				A6E3B85D25B3673C00C65157 /* UIDevice.swift */,
 				A6C0D70225B9DB9D00336230 /* URL.swift */,
 				A6C0D70625B9F21400336230 /* PKDrawing.swift */,
 				A6F60F8425CAA2CC002CAAE4 /* Data.swift */,
@@ -275,8 +274,9 @@
 		A6E3B85025B34ABA00C65157 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				A6E3B85125B34ACB00C65157 /* ThumbnailGenerator.swift */,
-				A6A8803D25BAB41E0080DD9D /* Downloader.swift */,
+				5FEFB7602CE9813F0045AA78 /* UIDevice.swift */,
+				5FEFB7622CE9818D0045AA78 /* ThumbnailGenerator.swift */,
+				5FEFB7642CE981A80045AA78 /* Downloader.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -284,9 +284,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A6E3B7E725B3260200C65157 /* Jottre */ = {
+		A6E3B7E725B3260200C65157 /* Scribed */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A6E3B7FC25B3260300C65157 /* Build configuration list for PBXNativeTarget "Jottre" */;
+			buildConfigurationList = A6E3B7FC25B3260300C65157 /* Build configuration list for PBXNativeTarget "Scribed" */;
 			buildPhases = (
 				A6E3B7E425B3260200C65157 /* Sources */,
 				A6E3B7E525B3260200C65157 /* Frameworks */,
@@ -296,9 +296,9 @@
 			);
 			dependencies = (
 			);
-			name = Jottre;
+			name = Scribed;
 			productName = Jottre;
-			productReference = A6E3B7E825B3260200C65157 /* Jottre.app */;
+			productReference = A6E3B7E825B3260200C65157 /* Scribed.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -315,7 +315,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A6E3B7E325B3260200C65157 /* Build configuration list for PBXProject "Jottre" */;
+			buildConfigurationList = A6E3B7E325B3260200C65157 /* Build configuration list for PBXProject "Scribed" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -329,7 +329,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A6E3B7E725B3260200C65157 /* Jottre */,
+				A6E3B7E725B3260200C65157 /* Scribed */,
 			);
 		};
 /* End PBXProject section */
@@ -357,8 +357,8 @@
 				A61A616125EEB2B40030684C /* RedoButton.swift in Sources */,
 				A6E3B7EC25B3260200C65157 /* AppDelegate.swift in Sources */,
 				A6E3B84125B334AF00C65157 /* InitialExtensions.swift in Sources */,
+				5FEFB7612CE9813F0045AA78 /* UIDevice.swift in Sources */,
 				A6330A7F25D05F6700068DE5 /* AddButton.swift in Sources */,
-				A6E3B85225B34ACB00C65157 /* ThumbnailGenerator.swift in Sources */,
 				A6BB134825B4A469008C5D8A /* SettingsButton.swift in Sources */,
 				A6E3B82C25B32AEB00C65157 /* NavigationViewController.swift in Sources */,
 				A6BB130725B45ECB008C5D8A /* SettingsViewController.swift in Sources */,
@@ -367,14 +367,15 @@
 				A6350E5425C9CEFB0059E96E /* NodeExtensions.swift in Sources */,
 				A6C0D70725B9F21400336230 /* PKDrawing.swift in Sources */,
 				A6E3B84B25B347C100C65157 /* DrawViewController.swift in Sources */,
-				A6E3B85E25B3673C00C65157 /* UIDevice.swift in Sources */,
 				A6C0D70325B9DB9D00336230 /* URL.swift in Sources */,
 				A650EE6B25C585D300830112 /* NodeDecoderExtension.swift in Sources */,
 				A6BB131325B46E2D008C5D8A /* SettingsCell.swift in Sources */,
 				A6E3B7EE25B3260200C65157 /* SceneDelegate.swift in Sources */,
+				5FEFB7652CE981A80045AA78 /* Downloader.swift in Sources */,
 				A6E3B83425B32BBC00C65157 /* Node.swift in Sources */,
 				A61BB9FE25D0608B00E63CF6 /* CustomButtonBarItem.swift in Sources */,
 				A61A616425EEB34E0030684C /* UndoButton.swift in Sources */,
+				5FEFB7632CE9818D0045AA78 /* ThumbnailGenerator.swift in Sources */,
 				A6E3B82F25B32B0700C65157 /* InitialViewController.swift in Sources */,
 				A6E3B83A25B333EC00C65157 /* NodeCell.swift in Sources */,
 				A65F231D25B5C1B000A0E870 /* IconSettingsCell.swift in Sources */,
@@ -385,7 +386,6 @@
 				A6BB130C25B46057008C5D8A /* Settings.swift in Sources */,
 				A6BB134F25B4B2D0008C5D8A /* CloudSettingsCell.swift in Sources */,
 				A6BB134C25B4AEFC008C5D8A /* SettingsExtensions.swift in Sources */,
-				A6A8803E25BAB41E0080DD9D /* Downloader.swift in Sources */,
 				A6BB131025B46BA2008C5D8A /* SettingsNavigationViewController.swift in Sources */,
 				A6E3B82825B32AD300C65157 /* NavigationTextButton.swift in Sources */,
 				A61BB9FA25D0604200E63CF6 /* ShareButton.swift in Sources */,
@@ -543,11 +543,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Jottre/Jottre.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Scribed/Scribed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = W34P65H467;
-				INFOPLIST_FILE = Jottre/Info.plist;
+				INFOPLIST_FILE = Scribed/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -568,11 +568,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Jottre/Jottre.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Scribed/Scribed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = W34P65H467;
-				INFOPLIST_FILE = Jottre/Info.plist;
+				INFOPLIST_FILE = Scribed/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -591,7 +591,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A6E3B7E325B3260200C65157 /* Build configuration list for PBXProject "Jottre" */ = {
+		A6E3B7E325B3260200C65157 /* Build configuration list for PBXProject "Scribed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6E3B7FA25B3260300C65157 /* Debug */,
@@ -600,7 +600,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A6E3B7FC25B3260300C65157 /* Build configuration list for PBXNativeTarget "Jottre" */ = {
+		A6E3B7FC25B3260300C65157 /* Build configuration list for PBXNativeTarget "Scribed" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A6E3B7FD25B3260300C65157 /* Debug */,
