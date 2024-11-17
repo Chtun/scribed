@@ -11,14 +11,21 @@ import OSLog
 import AVFoundation
 
 class DrawViewController: UIViewController {
-    private var audioRecorder: AVAudioRecorder?
-       private var isRecording = false {
-           didSet {
-               updateRecordButtonAppearance()  // Fixed function name to match
-           }
-       }
-    // MARK: - Properties
+    private var currentAudioFileName: String?
+    private var audioFileDidChange: Bool {
+            return currentAudioFileName != node.codable?.audioFileName
+        }
     
+    // Add this property to track the current audio player view
+    private var currentAudioPlayerView: AudioPlayerView?
+    
+    private var audioRecorder: AVAudioRecorder?
+    private var isRecording = false {
+        didSet {
+            updateRecordButtonAppearance()
+        }
+    }
+    // MARK: - Properties
     internal var startTime: Date?
     internal var currentStrokeStartTime: Date?
     
@@ -40,8 +47,6 @@ class DrawViewController: UIViewController {
     override var prefersHomeIndicatorAutoHidden: Bool {
         return true
     }
-    
-
     
     // MARK: - Subviews
     
@@ -103,6 +108,8 @@ class DrawViewController: UIViewController {
         
         setupViews()
         setupDelegates()
+        setupAudioPlayer()
+        updateRecordButtonState()
     }
     
     override func viewDidLayoutSubviews() {
@@ -166,6 +173,50 @@ class DrawViewController: UIViewController {
 
     
     // MARK: - Methods
+    func setupAudioPlayer() {
+        // Check if we already have an audio player view set up
+        if currentAudioPlayerView != nil {
+            // If the audio URL matches the current one, don't recreate the player
+            if let audioFileName = node.codable?.audioFileName,
+                let currentURL = currentAudioPlayerView?.currentAudioURL,
+                currentURL == getDocumentsDirectory().appendingPathComponent(audioFileName) {
+                    return
+            }
+        }
+        
+        // Store current scroll position
+        let currentOffset = canvasView.contentOffset
+        
+        // Remove existing audio player view if it exists
+        currentAudioPlayerView?.removeFromSuperview()
+            
+        // Create and configure new audio player view
+        let audioPlayerView = AudioPlayerView()
+        audioPlayerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(audioPlayerView)
+                    
+        NSLayoutConstraint.activate([
+            audioPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            audioPlayerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            audioPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            audioPlayerView.heightAnchor.constraint(equalToConstant: 44)
+        ])
+                    
+        if let audioFileName = node.codable?.audioFileName {
+            let audioURL = getDocumentsDirectory().appendingPathComponent(audioFileName)
+            audioPlayerView.loadAudio(url: audioURL)
+            currentAudioFileName = audioFileName
+        }
+                
+        // Store reference to current audio player view
+        currentAudioPlayerView = audioPlayerView
+                
+        // Restore scroll position
+        DispatchQueue.main.async {
+            self.canvasView.setContentOffset(currentOffset, animated: false)
+        }
+    }
+    
     
     func setupViews() {
 
@@ -196,34 +247,6 @@ class DrawViewController: UIViewController {
             loadingView.widthAnchor.constraint(equalToConstant: 120),
             loadingView.heightAnchor.constraint(equalToConstant: 120)
         ])
-        /*
-        // Add button stack view
-        let buttonStackView = UIStackView()
-        buttonStackView.axis = .vertical
-        buttonStackView.alignment = .fill
-        buttonStackView.distribution = .equalSpacing
-        buttonStackView.spacing = 8
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let drawingButton = UIButton(type: .system)
-        drawingButton.setTitle("Drawing", for: .normal)
-        drawingButton.addTarget(self, action: #selector(setDrawingMode), for: .touchUpInside)
-        
-        let viewingButton = UIButton(type: .system)
-        viewingButton.setTitle("Viewing", for: .normal)
-        viewingButton.addTarget(self, action: #selector(setViewingMode), for: .touchUpInside)
-        
-        buttonStackView.addArrangedSubview(drawingButton)
-        buttonStackView.addArrangedSubview(viewingButton)
-        
-        view.addSubview(buttonStackView)
-        
-        // Position the stack view below the navigation bar
-        NSLayoutConstraint.activate([
-            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16)
-        ])
-        */
         
         // Add button stack view
         let buttonStackView = UIStackView()
@@ -323,6 +346,14 @@ class DrawViewController: UIViewController {
         }
     }
     
+    private func updateRecordButtonState() {
+            recordButton.isEnabled = !(node.codable?.hasAudio ?? false)
+            if node.codable?.hasAudio ?? false {
+                recordButton.tintColor = .systemGray
+                recordButton.setImage(UIImage(systemName: "record.circle"), for: .normal)
+            }
+        }
+    
     private func startRecording() {
         let audioFilename = getDocumentsDirectory().appendingPathComponent("\(node.name ?? "recording")_\(Date().timeIntervalSince1970).m4a")
         print("Recording started at: \(audioFilename.path)")
@@ -347,6 +378,23 @@ class DrawViewController: UIViewController {
     private func stopRecording() {
         audioRecorder?.stop()
         isRecording = false
+        
+        if let audioRecorder = audioRecorder {
+            // Store current scroll position
+            let currentOffset = canvasView.contentOffset
+            node.codable?.hasAudio = true
+            node.codable?.audioFileName = audioRecorder.url.lastPathComponent
+            node.codable?.audioDuration = audioRecorder.currentTime
+            node.push()
+            
+            setupAudioPlayer()
+            updateRecordButtonState()
+            // Restore scroll position
+            DispatchQueue.main.async {
+                self.canvasView.setContentOffset(currentOffset, animated: false)
+            }
+        }
+        
     }
     
     private func getDocumentsDirectory() -> URL {
