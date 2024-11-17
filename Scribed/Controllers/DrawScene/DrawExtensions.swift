@@ -107,8 +107,8 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
         // Add stroke and timestamp to TimedDrawing
         timedDrawing.addStrokeWithTimestamp(
             lastStrokeIndex,
-            startTime: (self.startTime ?? Date()).addingTimeInterval(relativeStartTime),
-            endTime: (self.startTime ?? Date()).addingTimeInterval(relativeEndTime)
+            startTime: relativeStartTime,
+            endTime: relativeEndTime
         )
         
         // Log the stroke
@@ -133,8 +133,6 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
                 x: (locationInCanvas.x + canvasView.contentOffset.x) / canvasView.zoomScale,
                 y: (locationInCanvas.y + canvasView.contentOffset.y + canvasView.adjustedContentInset.top) / canvasView.zoomScale
             )
-            
-            print("Adjusted location: \(adjustedLocation)")
             
             if let strokeIndex = getTappedStrokeIndex(from: canvasView.drawing, at: adjustedLocation) {
                 handleStrokeSelection(at: strokeIndex)
@@ -175,6 +173,18 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
         
         viewedStrokeIndex = index
         highlightStroke(at: index)
+        
+        // Find the time stroke that corresponds to this stroke index.
+        let timedStrokes = self.timedDrawing.getTimedStrokes()
+        
+        for timedStroke in timedStrokes
+        {
+            if timedStroke.stroke_index == index
+            {
+                // Once you find the time stroke, set the audio to the given second.
+                currentAudioPlayerView?.setAudioPlayback(time: timedStroke.startTime)
+            }
+        }
     }
     
     func handleStrokeDeselection(at index: Int?)

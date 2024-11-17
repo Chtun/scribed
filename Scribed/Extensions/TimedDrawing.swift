@@ -3,8 +3,8 @@ import PencilKit
 // A struct to hold stroke data with timestamps
 struct TimedStroke: Codable {
     let stroke_index: Int
-    let startTime: Date
-    let endTime: Date
+    let startTime: TimeInterval
+    let endTime: TimeInterval
 }
 
 class TimedDrawing {
@@ -17,7 +17,7 @@ class TimedDrawing {
     }
     
     // Method to add a stroke with timestamps
-    func addStrokeWithTimestamp(_ stroke_index: Int, startTime: Date, endTime: Date) {
+    func addStrokeWithTimestamp(_ stroke_index: Int, startTime: TimeInterval, endTime: TimeInterval) {
         let timedStroke = TimedStroke(stroke_index: stroke_index, startTime: startTime, endTime: endTime)
         timedStrokes.append(timedStroke)
     }

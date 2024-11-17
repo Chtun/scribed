@@ -562,7 +562,7 @@
 				CODE_SIGN_ENTITLEMENTS = Scribed/Scribed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
-				DEVELOPMENT_TEAM = LQ6YZA7QWX;
+				DEVELOPMENT_TEAM = W34P65H467;
 				INFOPLIST_FILE = Scribed/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -570,7 +570,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.calvin.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poojakalikiri.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -590,7 +590,7 @@
 				CODE_SIGN_ENTITLEMENTS = Scribed/Scribed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
-				DEVELOPMENT_TEAM = LQ6YZA7QWX;
+				DEVELOPMENT_TEAM = W34P65H467;
 				INFOPLIST_FILE = Scribed/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -598,7 +598,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = com.calvin.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poojakalikiri.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
