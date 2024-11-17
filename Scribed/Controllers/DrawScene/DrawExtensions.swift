@@ -181,8 +181,16 @@ extension DrawViewController: PKCanvasViewDelegate, TrackablePKCanvasViewDelegat
         {
             if timedStroke.stroke_index == index
             {
+                let secondsToSubtract: TimeInterval = 2
+                var playbackTime = timedStroke.startTime - secondsToSubtract
+                
+                if (playbackTime < 0)
+                {
+                    playbackTime = TimeInterval(0)
+                }
+                
                 // Once you find the time stroke, set the audio to the given second.
-                currentAudioPlayerView?.setAudioPlayback(time: timedStroke.startTime)
+                currentAudioPlayerView?.setAudioPlayback(time: playbackTime)
             }
         }
     }
