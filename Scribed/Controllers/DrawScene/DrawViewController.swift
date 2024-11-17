@@ -25,9 +25,11 @@ class DrawViewController: UIViewController {
     internal var viewedStrokeIndex: Int?
     internal var timedDrawing = TimedDrawing()
     
+    internal var IsViewingMode: Bool = false
+    
     var node: Node!
     
-    var isUndoEnabled: Bool = false
+    var isUndoEnabled: Bool = true
     
     var modifiedCount: Int = 0
         
@@ -136,6 +138,9 @@ class DrawViewController: UIViewController {
     
     
     override func viewWillDisappear(_ animated: Bool) {
+        
+        handleStrokeDeselection(at: viewedStrokeIndex)
+        self.writeDrawing()
         super.viewWillDisappear(animated)
         
         view.window?.windowScene?.screenshotService?.delegate = nil
@@ -400,6 +405,7 @@ class DrawViewController: UIViewController {
 
         canvasView.isUserInteractionEnabled = true
         canvasView.drawingPolicy = .anyInput // Enable drawing
+        IsViewingMode = false
         print("Switched to drawing mode")
     }
 
@@ -419,6 +425,7 @@ class DrawViewController: UIViewController {
         )
 
         canvasView.isUserInteractionEnabled = false
+        IsViewingMode = true
         print("Switched to viewing mode")
     }
 
