@@ -39,6 +39,8 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need permission to use microphone for recording.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Jottre wants to store the image in your photo-library</string>
 	<key>NSUserActivityTypes</key>

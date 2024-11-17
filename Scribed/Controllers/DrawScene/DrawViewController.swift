@@ -8,9 +8,15 @@
 import UIKit
 import PencilKit
 import OSLog
+import AVFoundation
 
 class DrawViewController: UIViewController {
-    
+    private var audioRecorder: AVAudioRecorder?
+       private var isRecording = false {
+           didSet {
+               updateRecordButtonAppearance()  // Fixed function name to match
+           }
+       }
     // MARK: - Properties
     
     internal var startTime: Date?
@@ -69,6 +75,14 @@ class DrawViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
+    private lazy var recordButton: UIButton = {
+            let button = UIButton(type: .system)
+            button.setImage(UIImage(systemName: "record.circle"), for: .normal)
+            button.tintColor = .red
+            button.addTarget(self, action: #selector(recordButtonTapped), for: .touchUpInside)
+            return button
+        }()
 
     
     // MARK: - Init
@@ -257,7 +271,8 @@ class DrawViewController: UIViewController {
         // Add the buttons to the stack view
         buttonStackView.addArrangedSubview(drawingButton)
         buttonStackView.addArrangedSubview(viewingButton)
-
+        buttonStackView.addArrangedSubview(recordButton)
+        
         // Add the stack view to the main view
         view.addSubview(buttonStackView)
 
@@ -270,9 +285,87 @@ class DrawViewController: UIViewController {
         // Store buttons as properties for state management
         self.drawingButton = drawingButton
         self.viewingButton = viewingButton
-
+        setupAudioRecorder()
+        updateRecordButtonAppearance()
         updateContentSizeForDrawing()
+        
         setDrawingMode()
+    }
+    
+    private func setupAudioRecorder() {
+            let audioSession = AVAudioSession.sharedInstance()
+            
+            do {
+                try audioSession.setCategory(.playAndRecord, mode: .default)
+                try audioSession.setActive(true)
+                
+                // Request microphone permission
+                audioSession.requestRecordPermission { [weak self] allowed in
+                    DispatchQueue.main.async {
+                        self?.recordButton.isEnabled = allowed
+                        if allowed {
+                            self?.updateRecordButtonAppearance()  // Update appearance after permission granted
+                        }
+                    }
+                }
+            } catch {
+                print("Failed to set up audio session: \(error)")
+                recordButton.isEnabled = false
+            }
+        }
+        
+    private func updateRecordButtonAppearance() {  // Fixed function name
+        let imageName = isRecording ? "stop.circle.fill" : "record.circle"
+        recordButton.setImage(UIImage(systemName: imageName), for: .normal)
+        recordButton.tintColor = isRecording ? .red : .systemRed
+    }
+    
+    @objc private func recordButtonTapped() {
+        if isRecording {
+            stopRecording()
+        } else {
+            startRecording()
+        }
+    }
+    
+    private func startRecording() {
+        let audioFilename = getDocumentsDirectory().appendingPathComponent("\(node.name ?? "recording")_\(Date().timeIntervalSince1970).m4a")
+        print("Recording started at: \(audioFilename.path)")
+        
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 44100,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+            audioRecorder?.record()
+            isRecording = true
+        } catch {
+            print("Failed to start recording: \(error)")
+            showRecordingError()
+        }
+    }
+    
+    private func stopRecording() {
+        audioRecorder?.stop()
+        isRecording = false
+    }
+    
+    private func getDocumentsDirectory() -> URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+    
+    private func showRecordingError() {
+        let alert = UIAlertController(
+            title: "Recording Error",
+            message: "There was an error starting the audio recording. Please check the app's microphone permissions.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 
     
