@@ -13,6 +13,8 @@
 		5FEFB7672CE998A40045AA78 /* TimedDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7662CE998A40045AA78 /* TimedDrawing.swift */; };
 		5FEFB7692CE9A2C70045AA78 /* TrackablePKCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */; };
 		9A5EAFF92CE9DE1200CF15C8 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EAFF82CE9DE1200CF15C8 /* AudioPlayerView.swift */; };
+		9A5EB0062CEA45DB00CF15C8 /* SambaNovaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EB0052CEA45DB00CF15C8 /* SambaNovaViewModel.swift */; };
+		9A5EB0082CEA465000CF15C8 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EB0072CEA465000CF15C8 /* SearchResultView.swift */; };
 		A61A616125EEB2B40030684C /* RedoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616025EEB2B40030684C /* RedoButton.swift */; };
 		A61A616425EEB34E0030684C /* UndoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616325EEB34E0030684C /* UndoButton.swift */; };
 		A61A616725EEB44E0030684C /* SpaceButtonBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */; };
@@ -64,6 +66,10 @@
 		5FEFB7682CE9A2C70045AA78 /* TrackablePKCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackablePKCanvasView.swift; sourceTree = "<group>"; };
 		5FEFB76A2CE9A7D50045AA78 /* Scribed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scribed-Bridging-Header.h"; sourceTree = "<group>"; };
 		9A5EAFF82CE9DE1200CF15C8 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		9A5EB0052CEA45DB00CF15C8 /* SambaNovaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SambaNovaViewModel.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		9A5EB0072CEA465000CF15C8 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		9A5EB0172CEA54B500CF15C8 /* OpenAI.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OpenAI.txt; sourceTree = "<group>"; };
+		9A5EB0182CEA54B500CF15C8 /* Apple.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Apple.txt; sourceTree = "<group>"; };
 		A61A616025EEB2B40030684C /* RedoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedoButton.swift; sourceTree = "<group>"; };
 		A61A616325EEB34E0030684C /* UndoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoButton.swift; sourceTree = "<group>"; };
 		A61A616625EEB44E0030684C /* SpaceButtonBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceButtonBarItem.swift; sourceTree = "<group>"; };
@@ -123,6 +129,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A5EB0192CEA618200CF15C8 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				9A5EB0182CEA54B500CF15C8 /* Apple.txt */,
+				9A5EB0172CEA54B500CF15C8 /* OpenAI.txt */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
 		A61BBA0125D0634400E63CF6 /* BarButtonItems */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +290,9 @@
 		A6E3B84925B347AE00C65157 /* DrawScene */ = {
 			isa = PBXGroup;
 			children = (
+				9A5EB0192CEA618200CF15C8 /* docs */,
+				9A5EB0052CEA45DB00CF15C8 /* SambaNovaViewModel.swift */,
+				9A5EB0072CEA465000CF15C8 /* SearchResultView.swift */,
 				A6E3B84A25B347C100C65157 /* DrawViewController.swift */,
 				A6E3B84D25B3495800C65157 /* DrawExtensions.swift */,
 				A6E3B86425B372A800C65157 /* ExportActions.swift */,
@@ -377,6 +395,7 @@
 				9A5EAFF92CE9DE1200CF15C8 /* AudioPlayerView.swift in Sources */,
 				A6E3B84E25B3495800C65157 /* DrawExtensions.swift in Sources */,
 				A6E3B83D25B3340300C65157 /* UIView.swift in Sources */,
+				9A5EB0062CEA45DB00CF15C8 /* SambaNovaViewModel.swift in Sources */,
 				A6350E5425C9CEFB0059E96E /* NodeExtensions.swift in Sources */,
 				A6C0D70725B9F21400336230 /* PKDrawing.swift in Sources */,
 				A6E3B84B25B347C100C65157 /* DrawViewController.swift in Sources */,
@@ -394,6 +413,7 @@
 				A6E3B83A25B333EC00C65157 /* NodeCell.swift in Sources */,
 				A65F231D25B5C1B000A0E870 /* IconSettingsCell.swift in Sources */,
 				A6F60F8525CAA2CC002CAAE4 /* Data.swift in Sources */,
+				9A5EB0082CEA465000CF15C8 /* SearchResultView.swift in Sources */,
 				A6BB131B25B472F9008C5D8A /* AppearanceSettingsCell.swift in Sources */,
 				A6E3B83725B32BC500C65157 /* NodeCollector.swift in Sources */,
 				A6E3B82425B32ABE00C65157 /* String.swift in Sources */,

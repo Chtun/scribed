@@ -11,6 +11,8 @@ import OSLog
 import AVFoundation
 
 class DrawViewController: UIViewController {
+    
+    private let sambaNovaViewModel = SambaNovaViewModel()
     private var currentAudioFileName: String?
     private var audioFileDidChange: Bool {
             return currentAudioFileName != node.codable?.audioFileName
@@ -26,6 +28,10 @@ class DrawViewController: UIViewController {
         }
     }
     // MARK: - Properties
+    private var searchResultView: SearchResultView?
+    private var isSearching = false
+    
+   
     internal var startTime: Date?
     internal var currentStrokeStartTime: Date?
     
@@ -53,6 +59,8 @@ class DrawViewController: UIViewController {
     var loadingView: LoadingView = {
         return LoadingView()
     }()
+    
+    
     
     var canvasView: TrackablePKCanvasView = {
         let canvasView = TrackablePKCanvasView()
@@ -285,11 +293,25 @@ class DrawViewController: UIViewController {
         viewingButton.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true // Set width
 
         viewingButton.addTarget(self, action: #selector(setViewingMode), for: .touchUpInside)
+        
+        let searchButton = UIButton(type: .system)
+       let searchImage = UIImage(systemName: "magnifyingglass.circle")
+       searchButton.setImage(searchImage?.withRenderingMode(.alwaysTemplate), for: .normal)
+       searchButton.tintColor = .systemBlue
+        
+        searchButton.imageView?.contentMode = .scaleAspectFit
+        searchButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        searchButton.imageView?.translatesAutoresizingMaskIntoConstraints = false
+        searchButton.imageView?.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        searchButton.imageView?.widthAnchor.constraint(equalToConstant: 40).isActive = true
+
+        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
 
         // Add the buttons to the stack view
         buttonStackView.addArrangedSubview(drawingButton)
         buttonStackView.addArrangedSubview(viewingButton)
         buttonStackView.addArrangedSubview(recordButton)
+        buttonStackView.addArrangedSubview(searchButton)
         
         // Add the stack view to the main view
         view.addSubview(buttonStackView)
@@ -331,6 +353,61 @@ class DrawViewController: UIViewController {
                 recordButton.isEnabled = false
             }
         }
+    @objc private func searchButtonTapped() {
+            let alertController = UIAlertController(
+                title: "Search Text",
+                message: "Enter a term to search for",
+                preferredStyle: .alert
+            )
+            
+            alertController.addTextField { textField in
+                textField.placeholder = "Enter search term"
+            }
+            
+            let searchAction = UIAlertAction(title: "Search", style: .default) { [weak self] _ in
+                guard let searchTerm = alertController.textFields?.first?.text,
+                      !searchTerm.isEmpty else { return }
+                self?.performSearch(with: searchTerm)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            alertController.addAction(searchAction)
+            alertController.addAction(cancelAction)
+            
+            present(alertController, animated: true)
+        }
+        
+    private func performSearch(with term: String) {
+        // Perform the search
+        sambaNovaViewModel.searchText = term
+        sambaNovaViewModel.search()
+
+        // Wait for results and display them
+        // We will use a delay for demonstration purposes or to wait for async completion
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { // Assuming results will be ready after 1 second
+            if !self.sambaNovaViewModel.results.isEmpty {
+                self.displaySearchResults(self.sambaNovaViewModel.results)
+            }
+        }
+    }
+    
+    private func displaySearchResults(_ results: String) {
+        // Create an alert controller to display the results
+        let alertController = UIAlertController(
+            title: "Search Results",
+            message: results,
+            preferredStyle: .alert
+        )
+        
+        // Add an action to close the alert
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        
+        // Present the alert
+        present(alertController, animated: true, completion: nil)
+    }
+
         
     private func updateRecordButtonAppearance() {  // Fixed function name
         let imageName = isRecording ? "stop.circle.fill" : "record.circle"
