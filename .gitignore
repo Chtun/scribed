@@ -1,4 +1,4 @@
 exports/*
 resources/*
-.DS_Store/*
-Scribed.xcodeproj/*
+.DS_Store
+UserInterfaceState.xcuserstate
